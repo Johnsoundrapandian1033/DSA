@@ -1,0 +1,46 @@
+
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        System.out.println("Try programiz.pro");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the Number : ");
+        int num = scanner.nextInt();
+        System.out.println(validParanthesis(num));
+    }
+    public static List<String> validParanthesis(int num){
+        List<String>list = new ArrayList<>();
+        backTracking(num,list,0,0,"");
+        return list;
+    }
+    public static void backTracking(int num,List<String>list,int open, int close,String str){
+       // System.out.println(open+"  open  "+close +"  close  "+str+"  string  \n" + list +"   list");
+        if(str.length()==num*2){
+            boolean flag = false;
+            if(str.charAt(0) != ')' && str.charAt(num*2-1) !='('){
+                int o = 0, c= 0 ; 
+                for(int i = 0 ; i < num*2 ; i++){
+                    if( str.charAt(i)=='('){
+                        o++;
+                        flag = true;
+                    }
+                    else {
+                        c++;
+                    }
+                    if(c>o) {
+                        flag = false;
+                        break;
+                    }
+                }
+            }
+            if(flag) list.add(str);
+            return;
+        }
+        if(open < num){
+            backTracking(num,list,open+1,close,str+"(");
+        }
+        if(close < num){
+            backTracking(num,list,open,close+1,str+")");
+        }
+    }
+}
